@@ -1,0 +1,25 @@
+// SPDX-License-Identifier: GPL-2.0+
+/*
+ * dts file for Xilinx Microblaze sp701.
+ *
+ * (C) Copyright 2019-2022 Xilinx, Inc.
+ * (C) Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
+ *
+ * Venkatesh Yadav Abbarapu <venkatesh.abbarapu@xilinx.com>
+ */
+
+&axi_ethernet_0 {
+	phy-handle = <&phy0>;
+	/delete-node/ mdio;
+	axi_ethernet_mdio: mdio {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		phy0: phy@1 {
+			device_type = "ethernet-phy";
+			reg = <1>;
+			ti,rx-internal-delay = <0x3>;
+			ti,tx-internal-delay = <0x3>;
+			ti,fifo-depth = <0x1>;
+		};
+	};
+};
