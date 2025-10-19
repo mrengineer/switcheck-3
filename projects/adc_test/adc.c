@@ -34,7 +34,6 @@ int main ()
   struct sched_param param;
 
   uint32_t size;
-  int yes = 1;
 
   memset(&param, 0, sizeof(param));
   param.sched_priority = sched_get_priority_max(SCHED_FIFO);
@@ -135,12 +134,16 @@ int main ()
 
           for (int i = 0; i < words_in_half; ++i) {
               uint32_t word   = buf32[i];
-              uint8_t type    = (word >> 30) & 0x3;
-              int16_t a       = (int16_t)((word >> 15) & 0x7FFF); // 15 бит
-              int16_t b       = (int16_t)(word & 0x7FFF);         // 15 бит
+              //uint8_t type    = (word >> 30) & 0x3;
+              //int16_t a       = (int16_t)((word >> 15) & 0x7FFF); // 15 бит
+              //int16_t b       = (int16_t)(word & 0x7FFF);         // 15 бит
+
+              int16_t a = (int16_t)(word >> 16);  // старшие 16 бит
+              int16_t b = (int16_t)(word & 0xFFFF); // младшие 16 бит
+
               // Преобразование 15-битного знакового числа
-              if (a & 0x4000) a |= 0x8000; // sign extend
-              if (b & 0x4000) b |= 0x8000; // sign extend
+              //if (a & 0x4000) a |= 0x8000; // sign extend
+              //if (b & 0x4000) b |= 0x8000; // sign extend
 
               /*
               if (a < a_min){
@@ -157,9 +160,10 @@ int main ()
                   printf("B min: [%d] max: %d\n", b_min, b_max);
                   printf("\n");
               }
+                  */
               
 
-              
+              /*
               if (a > a_max){
                   a_max = a;
                   printf("A min: %d max: [%d]\n", a_min, a_max);
@@ -177,13 +181,14 @@ int main ()
               */
                 
 
-              if (i==1) printf("%2d|%2u|%d|%d\n", i, type, a, b);
+              //if (i<20) printf("%2d|%2u|%d|%d\n", i, type, a, b);
+              if (i<20) printf("%2u|%d|%d\n", i, a, b);
           }
 
       }
       else
       {
-        usleep(1000);
+        usleep(100);
       }
     }
 
