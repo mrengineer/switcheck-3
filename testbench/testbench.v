@@ -18,6 +18,7 @@ module tb_axis_red_pitaya_adc;
   wire [31:0] m_axis_tdata;
   
   reg [16:0] trg_lvl;
+  reg aresetn;
 
   // параметры сигналов
   real f_a = 1.0e4;   // 0.01 МГц
@@ -31,6 +32,7 @@ module tb_axis_red_pitaya_adc;
   // DUT
   axis_red_pitaya_adc dut (
     .aclk          (clk),
+    .aresetn       (aresetn),
     .adc_csn       (adc_csn),
     .adc_dat_a     (adc_dat_a),
     .adc_dat_b     (adc_dat_b),
@@ -46,8 +48,6 @@ module tb_axis_red_pitaya_adc;
   always @(posedge clk) begin
     t_ns = t_ns + CLK_PERIOD;
 
-
-
     va = $sin(2.0*3.1415926535*f_a*(t_ns*1e-9));
     vb = $sin(2.0*3.1415926535*f_b*(t_ns*1e-9));
 
@@ -61,7 +61,13 @@ module tb_axis_red_pitaya_adc;
 
   // выводим часть результатов
   initial begin
-    trg_lvl = 16'd6300;  // <── вот установка  уровня
+    trg_lvl = 16'd300;  // <── вот установка  уровня
+    
+    aresetn = 1'b0;     // начинаем с ресета
+
+    // держим ресет 10 тактов
+    repeat (10) @(posedge clk);
+    aresetn = 1'b1;     // снимаем ресет    
     
     $dumpfile("tb_axis_red_pitaya_adc.vcd");
     $dumpvars(0, tb_axis_red_pitaya_adc);

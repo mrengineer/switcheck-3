@@ -10,7 +10,7 @@ all: adc postbuild
 adc: $(SRC)
 	$(CC) $(CFLAGS) $(SRC) $(LDFLAGS) -o adc
 
-postbuild:
+postbuild: adc
 	./make.sh
 
 clean:

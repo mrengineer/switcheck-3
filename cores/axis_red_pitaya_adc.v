@@ -29,11 +29,13 @@ module axis_red_pitaya_adc #
   reg signed  [15:0] int_out_b_reg;
      
   reg signed [16:0] sum_signed;   
-  reg  [16:0] int_sum_reg;
+  reg [16:0] int_sum_reg;
+  reg [16:0] int_p_sum_reg;
   
   reg f_send;
-  reg [31:0] send_counter;
-   
+  reg [13:0] send_counter;
+  
+  reg [59:0] samples_counter;
     
 
   always @(posedge aclk or negedge aresetn)
@@ -41,30 +43,36 @@ module axis_red_pitaya_adc #
     if (!aresetn) begin
         send_counter <= 0;
         f_send       <= 0;
+        int_out_a_reg <= 0;
+        int_out_b_reg <= 0;
+        samples_counter <= 0;
 
     end else begin
-  
+        samples_counter <= samples_counter+1;
+        
         int_dat_a_reg <= adc_dat_a[15:2];
         int_dat_b_reg <= adc_dat_b[15:2];
         
-        int_out_a_reg <= {{(3){int_dat_a_reg[14-1]}}, ~int_dat_a_reg[14-2:0]};
+        //int_out_a_reg <= {{(3){int_dat_a_reg[14-1]}}, ~int_dat_a_reg[14-2:0]};                
         int_out_b_reg <= {{(3){int_dat_b_reg[14-1]}}, ~int_dat_b_reg[14-2:0]};
        
         // сумма как signed
-        sum_signed = $signed(int_out_a_reg) + $signed(int_out_b_reg);    
+        //sum_signed = $signed(int_out_a_reg) + $signed(int_out_b_reg);    
+        sum_signed = $signed(int_out_b_reg);
+        int_p_sum_reg <= int_sum_reg;
         int_sum_reg <= sum_signed[16] ? -sum_signed : sum_signed;       // берем модуль (по модулю, unsigned)
         
         if (f_send) begin            
-            if (send_counter == ((4096*1024)-1)) begin
+            if (send_counter == 0 && int_sum_reg < trg_lvl) begin   //для обеспечения burst. Надо слать кратно 16
                 f_send <= 0;
-                send_counter <= 0;
             end else begin
                 send_counter <= send_counter + 1;
+                int_out_a_reg <= int_out_a_reg +1;
             end            
-        end else begin                                
+        end else begin
+            //if (int_sum_reg >= trg_lvl && int_p_sum_reg < trg_lvl) begin
             if (int_sum_reg >= trg_lvl) begin
                f_send <= 1;
-               send_counter <= 0;
             end
         end 
         
