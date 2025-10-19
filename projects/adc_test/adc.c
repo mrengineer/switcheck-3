@@ -193,39 +193,6 @@ int main ()
         }
 
         last_pos = position;
-
-      /*
-      if((limit > 0 && position > limit) || (limit == 0 && position < 32*1024)){
-        offset = limit > 0 ? 0 : 4096*1024;
-        limit = limit  > 0 ? 0 : 32*1024;        
-        uint32_t *buf32 = (uint32_t *)((uint8_t *)ram + offset);
-
-        int words_in_half = (4096*1024) / sizeof(uint32_t); // 4MB / 4 байта = 1,048,576 слов Половина буфера
-
-          for (int i = 0; i < words_in_half; ++i) {
-              uint32_t word   = buf32[i];
-              //uint8_t type    = (word >> 30) & 0x3;
-              //int16_t a       = (int16_t)((word >> 15) & 0x7FFF); // 15 бит
-              //int16_t b       = (int16_t)(word & 0x7FFF);         // 15 бит
-
-              int16_t a = (int16_t)(word >> 16);  // старшие 16 бит
-              int16_t b = (int16_t)(word & 0xFFFF); // младшие 16 бит
-               
-
-              //if (i<20) printf("%2d|%2u|%d|%d\n", i, type, a, b);
-              fprintf(csv, "%2d|%d|%d\n", i, a, b);
-
-              if (i<10) printf("%2u|%d|%d\n", i, a, b);
-              if (i==10) printf("....\n");
-              //if (i>120-1 && i < words_in_half - 120 ) printf("%2u|%d|%d\n", i, a, b);
-          }
-
-      }
-      else
-      {
-        usleep(100);
-      }
-      */
     }
 
     printf("Interrupted! Exiting...\n");

@@ -43,8 +43,8 @@ module axis_red_pitaya_adc #
     if (!aresetn) begin
         send_counter <= 0;
         f_send       <= 0;
-        int_out_a_reg <= 0;
-        int_out_b_reg <= 0;
+        int_out_a_reg   <= 0;
+        int_out_b_reg   <= 0;
         samples_counter <= 0;
 
     end else begin
@@ -53,12 +53,12 @@ module axis_red_pitaya_adc #
         int_dat_a_reg <= adc_dat_a[15:2];
         int_dat_b_reg <= adc_dat_b[15:2];
         
-        //int_out_a_reg <= {{(3){int_dat_a_reg[14-1]}}, ~int_dat_a_reg[14-2:0]};                
+        int_out_a_reg <= {{(3){int_dat_a_reg[14-1]}}, ~int_dat_a_reg[14-2:0]};                
         int_out_b_reg <= {{(3){int_dat_b_reg[14-1]}}, ~int_dat_b_reg[14-2:0]};
        
         // сумма как signed
-        //sum_signed = $signed(int_out_a_reg) + $signed(int_out_b_reg);    
-        sum_signed = $signed(int_out_b_reg);
+        sum_signed = $signed(int_out_a_reg) + $signed(int_out_b_reg);    
+
         int_p_sum_reg <= int_sum_reg;
         int_sum_reg <= sum_signed[16] ? -sum_signed : sum_signed;       // берем модуль (по модулю, unsigned)
         
@@ -67,7 +67,6 @@ module axis_red_pitaya_adc #
                 f_send <= 0;
             end else begin
                 send_counter <= send_counter + 1;
-                int_out_a_reg <= int_out_a_reg +1;
             end            
         end else begin
             //if (int_sum_reg >= trg_lvl && int_p_sum_reg < trg_lvl) begin
@@ -81,7 +80,7 @@ module axis_red_pitaya_adc #
 
   assign adc_csn = 1'b1;
 
-  assign m_axis_tvalid = f_send; // 1'b1;
+  assign m_axis_tvalid = f_send;
 
   assign m_axis_tdata = {int_out_b_reg, int_out_a_reg};
 
