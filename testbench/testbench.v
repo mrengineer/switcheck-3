@@ -22,7 +22,7 @@ module tb_axis_red_pitaya_adc;
 
   // параметры сигналов
   real f_a = 1.0e4;   // 0.01 МГц
-  real f_b = 2.0e4;   // 0.02 МГц
+  real f_b = 2.5e4;   // 0.025 МГц
 
   integer offset = 8192;   // середина шкалы (14 бит)
   integer ampl   = 8191;   // амплитуда (почти вся шкала)
@@ -61,18 +61,18 @@ module tb_axis_red_pitaya_adc;
 
   // выводим часть результатов
   initial begin
-    trg_lvl = 16'd300;  // <── вот установка  уровня
+    trg_lvl = 16'd14000;  // <── вот установка  уровня
     
     aresetn = 1'b0;     // начинаем с ресета
 
     // держим ресет 10 тактов
-    repeat (10) @(posedge clk);
+    repeat (3) @(posedge clk);
     aresetn = 1'b1;     // снимаем ресет    
     
     $dumpfile("tb_axis_red_pitaya_adc.vcd");
     $dumpvars(0, tb_axis_red_pitaya_adc);
 
-    repeat (10000) @(posedge clk); // 10000 тактов
+    repeat (35000) @(posedge clk); // 100000 тактов
     $finish;
   end
 

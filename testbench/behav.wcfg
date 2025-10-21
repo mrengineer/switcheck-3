@@ -11,15 +11,21 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="74,996.833 ns"></ZoomStartTime>
-      <ZoomEndTime time="81,091.834 ns"></ZoomEndTime>
-      <Cursor1Time time="80,076.000 ns"></Cursor1Time>
+      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="175,400.001 ns"></ZoomEndTime>
+      <Cursor1Time time="69,566.667 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="230"></NameColumnWidth>
-      <ValueColumnWidth column_width="132"></ValueColumnWidth>
+      <NameColumnWidth column_width="197"></NameColumnWidth>
+      <ValueColumnWidth column_width="110"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="9" />
+   <WVObjectSize size="12" />
+   <wave_markers>
+      <marker label="" time="66500000" />
+      <marker label="" time="266500000" />
+      <marker label="" time="197580000" />
+      <marker label="" time="58621187" />
+   </wave_markers>
    <wvobject type="logic" fp_name="/tb_axis_red_pitaya_adc/m_axis_tvalid">
       <obj_property name="ElementShortName">m_axis_tvalid</obj_property>
       <obj_property name="ObjectShortName">m_axis_tvalid</obj_property>
@@ -28,10 +34,13 @@
       <obj_property name="ElementShortName">f_send</obj_property>
       <obj_property name="ObjectShortName">f_send</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/tb_axis_red_pitaya_adc/dut/send_counter">
-      <obj_property name="ElementShortName">send_counter[4:0]</obj_property>
-      <obj_property name="ObjectShortName">send_counter[4:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   <wvobject type="logic" fp_name="/tb_axis_red_pitaya_adc/dut/f_send_start">
+      <obj_property name="ElementShortName">f_send_start</obj_property>
+      <obj_property name="ObjectShortName">f_send_start</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_axis_red_pitaya_adc/dut/series_start">
+      <obj_property name="ElementShortName">series_start[59:0]</obj_property>
+      <obj_property name="ObjectShortName">series_start[59:0]</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/tb_axis_red_pitaya_adc/dut/int_out_a_reg">
       <obj_property name="ElementShortName">int_out_a_reg[15:0]</obj_property>
@@ -39,7 +48,7 @@
       <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
       <obj_property name="WaveformStyle">STYLE_ANALOG</obj_property>
       <obj_property name="CellHeight">50</obj_property>
-      <obj_property name="CustomSignalColor">#FF0080</obj_property>
+      <obj_property name="CustomSignalColor">#FFFF00</obj_property>
       <obj_property name="UseCustomSignalColor">true</obj_property>
       <obj_property name="AnalogYRangeType">ANALOG_YRANGETYPE_FIXED</obj_property>
       <obj_property name="AnalogYRangeMin">-8644.000000</obj_property>
@@ -60,6 +69,8 @@
       <obj_property name="AnalogInterpolation">ANALOG_INTERPOLATION_LINEAR</obj_property>
       <obj_property name="AnalogOffscale">ANALOG_OFFSCALE_HIDE</obj_property>
       <obj_property name="AnalogHorizLine">0.000000</obj_property>
+      <obj_property name="CustomSignalColor">#FFA500</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/tb_axis_red_pitaya_adc/dut/int_sum_reg">
       <obj_property name="ElementShortName">int_sum_reg[16:0]</obj_property>
@@ -74,18 +85,26 @@
       <obj_property name="AnalogYRangeType">ANALOG_YRANGETYPE_AUTO</obj_property>
       <obj_property name="AnalogInterpolation">ANALOG_INTERPOLATION_LINEAR</obj_property>
       <obj_property name="AnalogOffscale">ANALOG_OFFSCALE_HIDE</obj_property>
-      <obj_property name="AnalogHorizLine">300.000000</obj_property>
+      <obj_property name="AnalogHorizLine">14100.000000</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/tb_axis_red_pitaya_adc/dut/int_p_sum_reg">
       <obj_property name="ElementShortName">int_p_sum_reg[16:0]</obj_property>
       <obj_property name="ObjectShortName">int_p_sum_reg[16:0]</obj_property>
    </wvobject>
+   <wvobject type="array" fp_name="/tb_axis_red_pitaya_adc/dut/burst_counter">
+      <obj_property name="ElementShortName">burst_counter[8:0]</obj_property>
+      <obj_property name="ObjectShortName">burst_counter[8:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_axis_red_pitaya_adc/dut/series_counter">
+      <obj_property name="ElementShortName">series_counter[32:0]</obj_property>
+      <obj_property name="ObjectShortName">series_counter[32:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_axis_red_pitaya_adc/dut/m_axis_tdata">
+      <obj_property name="ElementShortName">m_axis_tdata[31:0]</obj_property>
+      <obj_property name="ObjectShortName">m_axis_tdata[31:0]</obj_property>
+   </wvobject>
    <wvobject type="logic" fp_name="/tb_axis_red_pitaya_adc/dut/aclk">
       <obj_property name="ElementShortName">aclk</obj_property>
       <obj_property name="ObjectShortName">aclk</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/tb_axis_red_pitaya_adc/dut/aresetn">
-      <obj_property name="ElementShortName">aresetn</obj_property>
-      <obj_property name="ObjectShortName">aresetn</obj_property>
    </wvobject>
 </wave_config>
